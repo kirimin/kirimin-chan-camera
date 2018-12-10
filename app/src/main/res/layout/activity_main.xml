@@ -1,18 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/vertical_page_margin"
-              android:paddingLeft="@dimen/horizontal_page_margin"
-              android:paddingRight="@dimen/horizontal_page_margin"
-              android:paddingTop="@dimen/vertical_page_margin"
-              tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/top_background">
+
+    <ImageView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/sd_kirimin_chan"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-            android:id="@+id/button_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/show_camera" />
+        android:id="@+id/button_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_page_margin"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="@dimen/horizontal_page_margin"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/select_photo"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/top_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

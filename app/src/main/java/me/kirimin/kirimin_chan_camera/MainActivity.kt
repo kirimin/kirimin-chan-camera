@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intentGallery.type = "image/*"
-        val intent = Intent.createChooser(intentCamera, "画像の選択")
+        val intent = Intent.createChooser(intentCamera, getString(R.string.select_photo))
         intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(intentGallery))
         startActivityForResult(intent, REQUEST_IMAGE_SELECT)
     }

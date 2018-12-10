@@ -5,13 +5,11 @@ import android.graphics.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import android.view.MotionEvent
 import android.graphics.drawable.BitmapDrawable
 import android.provider.MediaStore
-import android.view.ScaleGestureDetector
 import android.graphics.Bitmap.CompressFormat
 import android.os.Environment
-import android.view.View
+import android.view.*
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -86,10 +84,6 @@ class EditActivity : AppCompatActivity() {
             true
         }
 
-        save.setOnClickListener {
-            savePhoto()
-        }
-
         frameList.forEach {
             val item = layoutInflater.inflate(R.layout.view_frame, null)
             val frameThumbnail = item.findViewById<ImageView>(R.id.frameImageVIew)
@@ -99,6 +93,18 @@ class EditActivity : AppCompatActivity() {
             }
             frameSelect.addView(item)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_edit, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_save -> savePhoto()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun savePhoto() {
