@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.graphics.drawable.BitmapDrawable
 import android.provider.MediaStore
 import android.graphics.Bitmap.CompressFormat
+import android.net.Uri
 import android.os.Environment
 import android.view.*
 import java.io.File
@@ -71,7 +72,7 @@ class EditActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.edit_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        photoImageView.setImageURI(intent.getParcelableExtra(EXTRA_URI))
+        photoImageView.setImageBitmap(intent.getParcelableExtra<Uri>(EXTRA_URI).rotateFixedBitmap(this))
 
         val detector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
