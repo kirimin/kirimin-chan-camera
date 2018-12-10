@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.content.ContentValues
+import kotlinx.android.synthetic.main.activity_edit.*
 import me.kirimin.kirimin_chan_camera.EditActivity.Companion.EXTRA_URI
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setTitle(R.string.app_name)
+
         val buttonCamera = findViewById<Button>(R.id.button_camera)
         buttonCamera.setOnClickListener {
             checkPermissions()

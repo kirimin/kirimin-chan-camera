@@ -67,6 +67,9 @@ class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setTitle(R.string.edit_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         photoImageView.setImageURI(intent.getParcelableExtra(EXTRA_URI))
 
@@ -84,12 +87,14 @@ class EditActivity : AppCompatActivity() {
             true
         }
 
-        frameList.forEach {
+        frameList.forEach {res ->
             val item = layoutInflater.inflate(R.layout.view_frame, null)
             val frameThumbnail = item.findViewById<ImageView>(R.id.frameImageVIew)
-            frameThumbnail.setImageResource(it)
+            val bitmap = BitmapFactory.decodeResource(resources, res)
+            val scaled = Bitmap.createScaledBitmap(bitmap, bitmap.width / 4, bitmap.height / 4, true)
+            frameThumbnail.setImageBitmap(scaled)
             frameThumbnail.setOnClickListener {
-                frameImageVIew.setImageDrawable(frameThumbnail.drawable)
+                frameImageVIew.setImageResource(res)
             }
             frameSelect.addView(item)
         }
@@ -102,12 +107,15 @@ class EditActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> finish()
             R.id.action_save -> savePhoto()
             R.id.action_reset -> {
+                preDx = 0
+                preDy = 0
+                scale = 1f
                 frameImageVIew.layout(0, 0, frameImageVIew.width, frameImageVIew.height)
                 frameImageVIew.scaleX = 1f
                 frameImageVIew.scaleY = 1f
-
             }
         }
         return super.onOptionsItemSelected(item)
