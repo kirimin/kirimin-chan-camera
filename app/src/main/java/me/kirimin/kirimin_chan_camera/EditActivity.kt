@@ -15,6 +15,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -24,18 +25,18 @@ class EditActivity : AppCompatActivity() {
         const val SAVE_DIR = "/kirimin-chan-camera/"
 
         val frameList = listOf(
-                R.drawable.frame1,
-                R.drawable.frame2,
-                R.drawable.frame3,
-                R.drawable.frame4,
-                R.drawable.frame5,
-                R.drawable.frame6,
-                R.drawable.frame7,
-                R.drawable.frame8,
-                R.drawable.frame9,
-                R.drawable.frame10,
-                R.drawable.frame11,
-                R.drawable.frame12
+            R.drawable.frame1,
+            R.drawable.frame2,
+            R.drawable.frame3,
+            R.drawable.frame4,
+            R.drawable.frame5,
+            R.drawable.frame6,
+            R.drawable.frame7,
+            R.drawable.frame8,
+            R.drawable.frame9,
+            R.drawable.frame10,
+            R.drawable.frame11,
+            R.drawable.frame12
         )
 
         private fun computeBitmapSizeFromDynamicImageLayer(imageLayer: ImageView): Point {
@@ -101,30 +102,37 @@ class EditActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_save -> savePhoto()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun savePhoto() {
-        val newBitmap = Bitmap.createBitmap(photoImageView.width, photoImageView.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(newBitmap)
+        val baseBitmap = Bitmap.createBitmap(photoImageView.width, photoImageView.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(baseBitmap)
 
-        val imageBitmap = (photoImageView.drawable as BitmapDrawable).bitmap
-        val imageSize = computeBitmapSizeFromDynamicImageLayer(photoImageView)
-        val scaledImageBitmap = Bitmap.createScaledBitmap(imageBitmap, imageSize.x, imageSize.y, true)
+        val photoBitmap = (photoImageView.drawable as BitmapDrawable).bitmap
+        val photoSize = computeBitmapSizeFromDynamicImageLayer(photoImageView)
+        val scaledPhotoBitmap = Bitmap.createScaledBitmap(photoBitmap, photoSize.x, photoSize.y, true)
         canvas.drawBitmap(
-                scaledImageBitmap,
-                computeCenter(newBitmap.width, imageBitmap.width),
-                computeCenter(newBitmap.height, imageBitmap.height),
-                null
+            scaledPhotoBitmap,
+            computeCenter(baseBitmap.width, scaledPhotoBitmap.width),
+            computeCenter(baseBitmap.height, scaledPhotoBitmap.height),
+            null
         )
 
-        val frameBitmap = (frameImageVIew.drawable as BitmapDrawable).bitmap
-        val frameSize = computeBitmapSizeFromDynamicImageLayer(frameImageVIew)
-        val scaledFrameBitmap = Bitmap.createScaledBitmap(frameBitmap, frameSize.x, frameSize.y, true)
-        canvas.drawBitmap(scaledFrameBitmap, frameImageVIew.left.toFloat(), frameImageVIew.top.toFloat(), null)
+        if (frameImageVIew.drawable != null) {
+            val frameBitmap = (frameImageVIew.drawable as BitmapDrawable).bitmap
+            val frameSize = computeBitmapSizeFromDynamicImageLayer(frameImageVIew)
+            val scaledFrameBitmap = Bitmap.createScaledBitmap(frameBitmap, frameSize.x, frameSize.y, true)
+            canvas.drawBitmap(scaledFrameBitmap, frameImageVIew.left.toFloat(), frameImageVIew.top.toFloat(), null)
+        }
+
+        val paint = Paint()
+        paint.textSize = 120.toDp(this)
+        paint.color = ContextCompat.getColor(this, R.color.colorPrimary)
+        canvas.drawText(getString(R.string.sukashi), 64.toDp(this), 100.toDp(this), paint)
 
         val saveDir = SAVE_DIR
         val file = File(Environment.getExternalStorageDirectory().path + saveDir)
@@ -137,7 +145,7 @@ class EditActivity : AppCompatActivity() {
         val attachName = file.absolutePath + "/" + fileName
 
         val out = FileOutputStream(attachName)
-        newBitmap.compress(CompressFormat.JPEG, 100, out)
+        baseBitmap.compress(CompressFormat.JPEG, 100, out)
         out.flush()
         out.close()
 
