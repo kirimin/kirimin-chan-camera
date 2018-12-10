@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">kirimin-chan-camera</string>
+    <string name="show_camera">写真を選択</string>
+    <string name="save">保存</string>
+</resources>
