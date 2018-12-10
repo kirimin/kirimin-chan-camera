@@ -62,7 +62,6 @@ class EditActivity : AppCompatActivity() {
 
     private var preDx: Int = 0
     private var preDy: Int = 0
-
     private var scale = 1f
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +79,8 @@ class EditActivity : AppCompatActivity() {
             }
         })
         frameImageVIew.setOnTouchListener { view, event ->
-            detector.onTouchEvent(event)
             setScrollAction(view, event)
+            detector.onTouchEvent(event)
             true
         }
 
@@ -104,6 +103,12 @@ class EditActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_save -> savePhoto()
+            R.id.action_reset -> {
+                frameImageVIew.layout(0, 0, frameImageVIew.width, frameImageVIew.height)
+                frameImageVIew.scaleX = 1f
+                frameImageVIew.scaleY = 1f
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }

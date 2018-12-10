@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">きりみんちゃんカメラ</string>
+    <string name="edit_title">フレーム選択</string>
     <string name="select_photo">写真を選択</string>
     <string name="save">写真を保存</string>
+    <string name="reset">リセット</string>
     <string name="sukashi">きりみんちゃんカメラ @kirimin_chan</string>
 </resources>
