@@ -10,6 +10,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.content.ContentValues
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_edit.*
 import me.kirimin.kirimin_chan_camera.EditActivity.Companion.EXTRA_URI
 
@@ -31,6 +33,20 @@ class MainActivity : AppCompatActivity() {
         buttonCamera.setOnClickListener {
             checkPermissions()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_policy -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://kirimin.me/privacy_policy/kirimin_chan_camera/")))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkPermissions() {
