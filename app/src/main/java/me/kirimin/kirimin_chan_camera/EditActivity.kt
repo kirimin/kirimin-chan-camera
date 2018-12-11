@@ -61,6 +61,8 @@ class EditActivity : AppCompatActivity() {
 
     }
 
+    private var defaultFrameWidth = 0
+    private var defaultFrameHeight = 0
     private var preDx: Int = 0
     private var preDy: Int = 0
     private var scale = 1f
@@ -77,8 +79,11 @@ class EditActivity : AppCompatActivity() {
         val detector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 scale *= detector.scaleFactor
-                frameImageVIew.scaleX = scale
-                frameImageVIew.scaleY = scale
+                val left = frameImageVIew.left
+                val top = frameImageVIew.top
+                val width = left + defaultFrameWidth * scale
+                val height = top + defaultFrameHeight * scale
+                frameImageVIew.layout(left, top, width.toInt(), height.toInt())
                 return true
             }
         })
@@ -96,6 +101,10 @@ class EditActivity : AppCompatActivity() {
             frameThumbnail.setImageBitmap(scaled)
             frameThumbnail.setOnClickListener {
                 frameImageVIew.setImageResource(res)
+                frameImageVIew.post {
+                    defaultFrameWidth = frameImageVIew.width
+                    defaultFrameHeight = frameImageVIew.height
+                }
             }
             frameSelect.addView(item)
         }
@@ -115,8 +124,6 @@ class EditActivity : AppCompatActivity() {
                 preDy = 0
                 scale = 1f
                 frameImageVIew.layout(0, 0, frameImageVIew.width, frameImageVIew.height)
-                frameImageVIew.scaleX = 1f
-                frameImageVIew.scaleY = 1f
             }
         }
         return super.onOptionsItemSelected(item)
