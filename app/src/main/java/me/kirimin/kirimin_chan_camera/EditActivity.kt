@@ -123,7 +123,7 @@ class EditActivity : AppCompatActivity() {
                 preDx = 0
                 preDy = 0
                 scale = 1f
-                frameImageVIew.layout(0, 0, frameImageVIew.width, frameImageVIew.height)
+                frameImageVIew.layout(0, 0, defaultFrameWidth, defaultFrameHeight)
             }
         }
         return super.onOptionsItemSelected(item)
