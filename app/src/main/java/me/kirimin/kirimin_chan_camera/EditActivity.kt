@@ -147,7 +147,7 @@ class EditActivity : AppCompatActivity() {
             val frameBitmap = (frameImageVIew.drawable as BitmapDrawable).bitmap
             val frameSize = computeBitmapSizeFromDynamicImageLayer(frameImageVIew)
             val scaledFrameBitmap = Bitmap.createScaledBitmap(frameBitmap, frameSize.x, frameSize.y, true)
-            scaledFrameBitmap.density = 420
+            scaledFrameBitmap.density = photoBitmap.density
             canvas.drawBitmap(scaledFrameBitmap, frameImageVIew.left.toFloat(), frameImageVIew.top.toFloat(), null)
         }
 
