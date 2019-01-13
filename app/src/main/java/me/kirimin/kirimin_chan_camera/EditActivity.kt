@@ -37,7 +37,9 @@ class EditActivity : AppCompatActivity() {
             R.drawable.frame9,
             R.drawable.frame10,
             R.drawable.frame11,
-            R.drawable.frame12
+            R.drawable.frame12,
+            R.drawable.frame13,
+            R.drawable.frame14
         )
 
         private fun computeBitmapSizeFromDynamicImageLayer(imageLayer: ImageView): Point {
