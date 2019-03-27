@@ -18,6 +18,8 @@ import java.util.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_edit.*
+import android.content.Intent
+import androidx.core.content.FileProvider
 
 class EditActivity : AppCompatActivity() {
 
@@ -43,8 +45,7 @@ class EditActivity : AppCompatActivity() {
             R.drawable.frame15,
             R.drawable.frame16,
             R.drawable.frame_kirino1,
-            R.drawable.frame_sd1,
-            R.drawable.frame_sd2
+            R.drawable.frame_sd1
         )
 
         private fun computeBitmapSizeFromDynamicImageLayer(imageLayer: ImageView): Point {
@@ -100,7 +101,7 @@ class EditActivity : AppCompatActivity() {
             true
         }
 
-        frameList.forEach {res ->
+        frameList.forEach { res ->
             val item = layoutInflater.inflate(R.layout.view_frame, null)
             val frameThumbnail = item.findViewById<ImageView>(R.id.frameImageVIew)
             val bitmap = BitmapFactory.decodeResource(resources, res)
@@ -125,7 +126,8 @@ class EditActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.action_save -> savePhoto()
+            R.id.action_save -> savePhotoAction()
+            R.id.action_share -> shareAction()
             R.id.action_reset -> {
                 preDx = 0
                 preDy = 0
@@ -136,7 +138,24 @@ class EditActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun savePhoto() {
+    private fun savePhotoAction() {
+        saveImpl()
+        Toast.makeText(this, "ギャラリーに保存しました", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun shareAction() {
+        val file = File(saveImpl())
+        val uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", file)
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.setDataAndType(uri, contentResolver.getType(uri))
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.putExtra(Intent.EXTRA_TEXT, "#きりみんちゃんカメラ")
+        startActivity(intent)
+    }
+
+    private fun saveImpl(): String {
         val baseBitmap = Bitmap.createBitmap(photoImageView.width, photoImageView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(baseBitmap)
 
@@ -170,7 +189,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         val fileNameDate = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPAN)
-        val fileName = fileNameDate.format(Date()) + ".jpg"
+        val fileName = "a" + ".jpg"
         val attachName = file.absolutePath + "/" + fileName
 
         val out = FileOutputStream(attachName)
@@ -185,8 +204,7 @@ class EditActivity : AppCompatActivity() {
         values.put(MediaStore.Images.Media.TITLE, fileName)
         values.put("_data", attachName)
         contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-
-        Toast.makeText(this, "保存しました", Toast.LENGTH_SHORT).show()
+        return attachName
     }
 
     private fun setScrollAction(view: View, event: MotionEvent) {

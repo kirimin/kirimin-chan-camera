@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="me.kirimin.kirimin_chan_camera">
+          xmlns:tools="http://schemas.android.com/tools" package="me.kirimin.kirimin_chan_camera">
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
@@ -25,6 +25,16 @@
                 android:name=".EditActivity"
                 android:screenOrientation="portrait">
         </activity>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>
