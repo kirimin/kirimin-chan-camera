@@ -44,8 +44,14 @@ class EditActivity : AppCompatActivity() {
             R.drawable.frame14,
             R.drawable.frame15,
             R.drawable.frame16,
+            R.drawable.frame17,
+            R.drawable.frame18,
+            R.drawable.frame19,
+            R.drawable.frame20,
+            R.drawable.frame21,
             R.drawable.frame_kirino1,
-            R.drawable.frame_sd1
+            R.drawable.frame_sd1,
+            R.drawable.frame_sd2
         )
 
         private fun computeBitmapSizeFromDynamicImageLayer(imageLayer: ImageView): Point {
@@ -151,7 +157,7 @@ class EditActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.setDataAndType(uri, contentResolver.getType(uri))
         intent.putExtra(Intent.EXTRA_STREAM, uri)
-        intent.putExtra(Intent.EXTRA_TEXT, "#きりみんちゃんカメラ")
+        intent.putExtra(Intent.EXTRA_TEXT, "#きりみんちゃんカメラ http://bit.ly/2U7U90I")
         startActivity(intent)
     }
 
