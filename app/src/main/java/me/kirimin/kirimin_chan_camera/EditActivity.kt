@@ -195,7 +195,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         val fileNameDate = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPAN)
-        val fileName = "a" + ".jpg"
+        val fileName = fileNameDate.format(Date()) + ".jpg"
         val attachName = file.absolutePath + "/" + fileName
 
         val out = FileOutputStream(attachName)
