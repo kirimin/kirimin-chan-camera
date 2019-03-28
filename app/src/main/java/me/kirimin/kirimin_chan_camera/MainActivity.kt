@@ -51,11 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPermissions() {
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                navigateToCamera()
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.CAMERA), 1)
-            }
+            navigateToCamera()
         } else {
             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
         }
